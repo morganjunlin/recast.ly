@@ -16,11 +16,11 @@ class App extends React.Component {
     this.videosClickHandler = this.videosClickHandler.bind(this);
     this.searchClickHandler = this.searchClickHandler.bind(this);
   }
-
+  
   componentDidMount() {
     this.props.searchYouTube({
       key: YOUTUBE_API_KEY,
-      query: 'old town road',
+      query: 'rick astley',
       max: 5
     }, (data) => {
       this.setState({
