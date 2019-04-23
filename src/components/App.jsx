@@ -14,6 +14,7 @@ class App extends React.Component {
     }
 
     this.videosClickHandler = this.videosClickHandler.bind(this);
+    this.searchClickHandler = this.searchClickHandler.bind(this);
   }
 
   componentDidMount() {
@@ -34,7 +35,16 @@ class App extends React.Component {
   }
 
   searchClickHandler(query) {
-    
+    this.props.searchYouTube({
+      key: YOUTUBE_API_KEY,
+      query: query,
+      max: 5
+    }, (data) => {
+      this.setState({
+        videos: data.items,
+        video: data.items[0]
+      })
+    })
   }
 
   render() {
@@ -42,7 +52,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search />
+            <Search searchClickHandler={this.searchClickHandler}/>
           </div>
         </nav>
         <div className="row">
