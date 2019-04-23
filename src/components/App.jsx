@@ -1,6 +1,7 @@
 import VideoList from './VideoList.js';
-import exampleVideoData from '../data/exampleVideoData.js'
-import VideoPlayer from './VideoPlayer.js'
+import exampleVideoData from '../data/exampleVideoData.js';
+import VideoPlayer from './VideoPlayer.js';
+import YOUTUBE_API_KEY from '../config/youtube.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -11,7 +12,21 @@ class App extends React.Component {
       video: exampleVideoData[0]
     }
 
-    this.videosClickHandler.bind(this); // maybe right
+    this.videosClickHandler = this.videosClickHandler.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.searchYouTube({
+      key: YOUTUBE_API_KEY,
+      query: 'old town road',
+      max: 5
+    }, 
+    (data) => {
+      this.setState({
+        videos: data.items,
+        video: data.items[0]
+      })
+    }) 
   }
 
   videosClickHandler(video) {
